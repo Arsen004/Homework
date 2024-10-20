@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <p id="text">Магрипа Харипулаевна</p>
+    <button id="chtxt1">Red</button>
+    <button id="chtxt2">Fade Toggle</button>
+    <button id="chtxt3">Add text</button> <br>
+
+    <button id="chimg1">Image1</button> <br>
+    <button id="chimg2">Image2</button> <br>
+    <button id="chimg3">Image3</button> <br>
+    <button id="chimg4">Image4</button> <br>
+    <button id="chimg5">Remove</button> <br>
+
+    <img src="" alt="" id="image">
+    
+    <script>
+        $('#chtxt1').click(function(){
+            $('#text').css('color', 'red')
+        })
+        $('#chtxt2').click(function(){
+            $('#text').fadeToggle()
+        })
+        $('#chtxt3').click(function(){
+            $('#text').append('<p>Звучит как будто в воде булькаешь</p>')
+        })
+
+        $('#chimg1').click(function(){
+            $('#image').attr('src', 'd1.jpg')
+        })
+        $('#chimg2').click(function(){
+            $('#image').attr('src', 'd2.jpg')
+        })
+        $('#chimg3').click(function(){
+            $('#image').attr('src', 'd3.jpg')
+        })
+        $('#chimg4').click(function(){
+            $('#image').attr('src', 'd4.png')
+        })
+        $('#chimg5').click(function(){
+            $('#image').attr('src', ' ')
+        })
+    </script>
+</body>
+</html>
