@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Приложение для заметок</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      margin-top: 50px;
+    }
+    #app {
+      width: 300px;
+    }
+    .note-list {
+      list-style-type: none;
+      padding: 0;
+    }
+    .note-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px;
+      border: 1px solid #ddd;
+      margin: 5px 0;
+      background-color: #f9f9f9;
+    }
+    .note-item input[type="text"] {
+      width: 70%;
+      padding: 4px;
+      border: 1px solid #ddd;
+      margin-right: 5px;
+    }
+    .note-item button {
+      margin: 0 2px;
+      padding: 5px;
+    }
+    #new-note {
+      width: 100%;
+      padding: 8px;
+      margin: 10px 0;
+    }
+    #add-note-btn {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #add-note-btn:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <input type="text" id="new-note" placeholder="Введите новую заметку" />
+    <button id="add-note-btn">Добавить заметку</button>
+    <ul class="note-list" id="note-list"></ul>
+  </div>
+
+  <script>
+    // Компонент для заметок
+    class Note {
+      constructor(content) {
+        this.content = content;
+        this.isEditing = false;
+      }
+      toggleEdit() {
+        this.isEditing = !this.isEditing;
+      }
+      updateContent(newContent) {
+        this.content = newContent;
+      }
+    }
+
+    // Компонент для управления списком заметок
+    class NoteApp {
+      constructor() {
+        this.notes = [];
+        this.noteListElement = document.getElementById('note-list');
+        this.newNoteInput = document.getElementById('new-note');
+        this.addNoteButton = document.getElementById('add-note-btn');
+
+        this.addNoteButton.addEventListener('click', () => this.addNote());
+      }
+
+      addNote() {
+        const content = this.newNoteInput.value.trim();
+        if (content) {
+          const note = new Note(content);
+          this.notes.push(note);
+          this.newNoteInput.value = '';
+          this.render();
+        }
+      }
+
+      deleteNote(index) {
+        this.notes.splice(index, 1);
+        this.render();
+      }
+
+      editNote(index) {
+        this.notes[index].toggleEdit();
+        this.render();
+      }
+
+      saveNote(index, newContent) {
+        this.notes[index].updateContent(newContent);
+        this.notes[index].toggleEdit();
+        this.render();
+      }
+
+      render() {
+        this.noteListElement.innerHTML = '';
+
+        this.notes.forEach((note, index) => {
+          const listItem = document.createElement('li');
+          listItem.className = 'note-item';
+
+          if (note.isEditing) {
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = note.content;
+            listItem.appendChild(input);
+
+            const saveButton = document.createElement('button');
+            saveButton.textContent = 'Сохранить';
+            saveButton.addEventListener('click', () => this.saveNote(index, input.value));
+            listItem.appendChild(saveButton);
+
+          } else {
+            const text = document.createElement('span');
+            text.textContent = note.content;
+            listItem.appendChild(text);
+
+            const editButton = document.createElement('button');
+            editButton.textContent = 'Редактировать';
+            editButton.addEventListener('click', () => this.editNote(index));
+            listItem.appendChild(editButton);
+          }
+
+          const deleteButton = document.createElement('button');
+          deleteButton.textContent = 'Удалить';
+          deleteButton.addEventListener('click', () => this.deleteNote(index));
+          listItem.appendChild(deleteButton);
+
+          this.noteListElement.appendChild(listItem);
+        });
+      }
+    }
+
+    // Инициализация приложения
+    document.addEventListener('DOMContentLoaded', () => {
+      new NoteApp();
+    });
+  </script>
+</body>
+</html>
