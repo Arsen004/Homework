@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Домашнее задание по jQuery</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        #list {
+            list-style-type: none;
+            padding: 0;
+        }
+        #list li {
+            padding: 8px;
+            background-color: #f0f0f0;
+            margin: 5px 0;
+            cursor: pointer;
+        }
+        .highlight {
+            background-color: #d3f8d3;
+        }
+        .animated-box {
+            width: 100px;
+            height: 100px;
+            background-color: #3498db;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Задание 1: Добавление элементов и изменение цвета -->
+    <h1>Задание 1: Список элементов</h1>
+    <button id="addItem">Добавить элемент</button>
+    <ul id="list">
+        <li>Элемент 1</li>
+        <li>Элемент 2</li>
+        <li>Элемент 3</li>
+    </ul>
+
+    <!-- Задание 2: Анимация -->
+    <h1>Задание 2: Анимация</h1>
+    <button id="animateBox">Анимация</button>
+    <div class="animated-box" id="animatedBox"></div>
+
+    <!-- Задание 3: Отображение текста в заголовке -->
+    <h1>Задание 3: Отображение текста в заголовке</h1>
+    <input type="text" id="inputText" placeholder="Введите текст">
+    <h2 id="displayText">Здесь будет отображаться текст</h2>
+
+    <script>
+        $(document).ready(function() {
+            // Задание 1: Добавление нового элемента и изменение цвета при клике
+            $("#addItem").click(function() {
+                const newItem = $("<li>").text("Новый элемент");
+                $("#list").append(newItem);
+            });
+
+            $("#list").on("click", "li", function() {
+                $(this).toggleClass("highlight");
+            });
+
+            // Задание 2: Анимация - скрытие и показ элемента
+            $("#animateBox").click(function() {
+                $("#animatedBox").fadeOut(500).fadeIn(500).slideToggle(500).delay(2000).slideToggle(500);
+            });
+
+            // Задание 3: Отображение текста при вводе
+            $("#inputText").keyup(function() {
+                const inputText = $(this).val();
+                $("#displayText").text(inputText);
+            });
+        });
+    </script>
+
+</body>
+</html>
