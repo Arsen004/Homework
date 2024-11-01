@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Случайное изображение собаки</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #dogImage {
+            margin-top: 20px;
+            max-width: 100%;
+            height: auto;
+        }
+        #error {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Случайное изображение собаки</h1>
+    <button id="fetchDogBtn">Получить случайное изображение собаки</button>
+    <div id="imageContainer">
+        <img id="dogImage" src="" alt="Случайная собака" style="display: none;">
+        <p id="error"></p>
+    </div>
+
+    <script>
+        document.getElementById('fetchDogBtn').addEventListener('click', () => {
+            const imageContainer = document.getElementById('dogImage');
+            const errorContainer = document.getElementById('error');
+            imageContainer.style.display = 'none';
+            errorContainer.textContent = '';
+
+            fetch('https://dog.ceo/api/breeds/image/random')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Не удалось загрузить изображение');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    imageContainer.src = data.message;
+                    imageContainer.style.display = 'block';
+                })
+                .catch(error => {
+                    errorContainer.textContent = 'Ошибка: ' + error.message;
+                });
+        });
+    </script>
+</body>
+</html>
