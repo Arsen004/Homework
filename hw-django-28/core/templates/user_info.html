@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Информация о пользователе</title>
+</head>
+<body>
+    <h2>Данные пользователя</h2>
+    <p>Имя пользователя: {{ user.username }}</p>
+    <p>Email: {{ user.email }}</p>
+    <p>Группы:
+        <ul>
+            {% for group in groups %}
+                <li>{{ group.name }}</li>
+            {% endfor %}
+        </ul>
+    </p>
+    <p>Суперпользователь: {{ user.is_superuser }}</p>
+    <p><a href="{% url 'logout' %}">Выйти</a></p>
+</body>
+</html>
